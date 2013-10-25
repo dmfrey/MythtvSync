@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_home"
+            android:layout_width="96dp"
+            android:layout_height="64dp"
+            android:onClick="clickHome"
+            android:text="@string/btn_home" />
+
+        <Button
+            android:id="@+id/btn_away"
+            android:layout_width="96dp"
+            android:layout_height="64dp"
+            android:onClick="clickAway"
+            android:text="@string/btn_away" />
+
+        <Button
+            android:id="@+id/btn_disconnect"
+            android:layout_width="120dp"
+            android:layout_height="64dp"
+            android:onClick="clickDisconnect"
+            android:text="@string/btn_disconnect" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/msg_not_connected"
+    />
+
+    <FrameLayout android:id="@+id/frame_layout_recordings"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

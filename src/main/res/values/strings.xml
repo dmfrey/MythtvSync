@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MythSync</string>
+
+    <string name="msg_not_connected">Not Connected</string>
+    <string name="msg_empty">No Recordings</string>
+
+    <string name="btn_home">Home</string>
+    <string name="btn_away">Away</string>
+    <string name="btn_disconnect">Disconnect</string>
+
+</resources>
