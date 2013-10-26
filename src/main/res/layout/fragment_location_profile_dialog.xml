@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dip">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_location_profile_type"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_gravity="left|center_vertical" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/location_profile_type_spinner"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_name"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_gravity="left|center_vertical" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/name_editText"
+        android:layout_gravity="left|center_vertical" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_url"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_gravity="left|center_vertical" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/url_editText"
+        android:layout_gravity="left|center_vertical" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_hostname"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_gravity="left|center_vertical" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/hostname_editText"
+        android:layout_gravity="left|center_vertical" />
+
+</LinearLayout>

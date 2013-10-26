@@ -72,7 +72,7 @@ public class RecordingsFragment extends ListFragment implements LoaderManager.Lo
         Log.i( TAG, "onAttach : enter" );
         super.onAttach( activity );
 
-        SyncUtils.CreateSyncAccount(activity);
+        SyncUtils.CreateSyncAccount( activity );
 
         Log.i( TAG, "onAttach : exit" );
     }

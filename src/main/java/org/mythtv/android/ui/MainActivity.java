@@ -1,10 +1,13 @@
 package org.mythtv.android.ui;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 import org.mythtv.android.R;
 import org.mythtv.android.db.locationProfile.LocationProfile;
 import org.mythtv.android.db.locationProfile.LocationProfileDaoHelper;
+import org.mythtv.android.sync.SyncUtils;
 
 public class MainActivity extends Activity {
 
@@ -24,6 +28,8 @@ public class MainActivity extends Activity {
     private FrameLayout mRecordingsFrameLayout;
     private Button mBtnHome, mBtnAway, mBtnDisconnect;
     private TextView mTextView;
+
+    private Menu mOptionsMenu;
 
     private LocationProfile mLocationProfile;
     private RecordingsFragment mRecordingsFragment;
@@ -46,7 +52,7 @@ public class MainActivity extends Activity {
 
         mBtnHome.setEnabled( true );
         mBtnAway.setEnabled( true );
-        mBtnDisconnect.setEnabled( false );
+        mBtnDisconnect.setEnabled(false);
 
         Log.i( TAG, "onCreate : exit" );
     }
@@ -71,6 +77,39 @@ public class MainActivity extends Activity {
 
         super.onDestroy();
         Log.i( TAG, "onDestroy : exit" );
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu( Menu menu ) {
+
+        super.onCreateOptionsMenu( menu );
+
+        mOptionsMenu = menu;
+
+        getMenuInflater().inflate( R.menu.main, menu );
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected( MenuItem item ) {
+
+        switch( item.getItemId() ) {
+
+            case R.id.menu_refresh :
+
+                SyncUtils.TriggerRefresh();
+
+                return true;
+
+            case R.id.menu_preferences :
+
+                showDialog();
+
+                return true;
+        }
+
+        return super.onOptionsItemSelected( item );
     }
 
     public void clickHome( View v ) {
@@ -109,7 +148,8 @@ public class MainActivity extends Activity {
         Log.d( TAG, "updateView : enter" );
 
         if( null != mLocationProfile ) {
-
+            Log.v( TAG, "updateView : updating with profile" );
+            
             mLocationProfileDaoHelper.setConnectedLocationProfile( this, mLocationProfile.getId() );
             mTextView.setText( mLocationProfile.getHostname() + ":" + mLocationProfile.getUrl() );
 
@@ -120,6 +160,7 @@ public class MainActivity extends Activity {
             loadRecordingsFragment();
 
         } else {
+            Log.v( TAG, "updateView : resetting with no profile" );
 
             mLocationProfileDaoHelper.resetConnectedProfiles( this );
             mTextView.setText(getResources().getString(R.string.msg_not_connected));
@@ -153,14 +194,30 @@ public class MainActivity extends Activity {
         Log.d( TAG, "removeRecordingsFragment : enter" );
 
         if( null != mRecordingsFragment ) {
+            Log.v( TAG, "removeRecordingsFragment : removing fragment" );
 
             mFragmentManager
                 .beginTransaction()
-                .remove( mRecordingsFragment );
+                .remove( mRecordingsFragment ).commit();
 
         }
 
         Log.d( TAG, "removeRecordingsFragment : exit" );
+    }
+
+    private void showDialog() {
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag( "dialog" );
+        if( null != prev ) {
+            ft.remove( prev );
+        }
+        ft.addToBackStack( null );
+
+        // Create and show the dialog.
+        LocationProfileDialogFragment newFragment = LocationProfileDialogFragment.newInstance();
+        newFragment.show( ft, "dialog" );
+
     }
 
 }

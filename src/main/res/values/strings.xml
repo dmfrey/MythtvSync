@@ -10,4 +10,22 @@
     <string name="btn_away">Away</string>
     <string name="btn_disconnect">Disconnect</string>
 
+    <string name="btn_save">Save</string>
+    <string name="btn_close">Close</string>
+
+    <string name="lbl_location_profile_type">Type:</string>
+    <string name="lbl_name">Name:</string>
+    <string name="lbl_url">URL:</string>
+    <string name="lbl_hostname">Hostname:</string>
+
+    <string name="lbl_refresh">Refresh</string>
+    <string name="lbl_preferences">Preferences</string>
+
+    <string name="lbl_location_profile_dialog_title">Settings</string>
+
+    <string-array name="location_profile_types_array">
+        <item>HOME</item>
+        <item>AWAY</item>
+    </string-array>
+
 </resources>

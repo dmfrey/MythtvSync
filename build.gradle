@@ -15,6 +15,20 @@ apply plugin: 'android'
 android {
     buildToolsVersion "18.0.1"
     compileSdkVersion 18
+
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+            java.srcDirs = ['src/main/java']
+            resources.srcDirs = ['src/main/res']
+            aild.srcDirs = ['src/main/aild']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['src/main/res']
+            assets.srcDirs = ['src/main/assets']
+        }
+
+        instrumentTest.setRoot('src/main/tests')
+    }
 }
 
 repositories {

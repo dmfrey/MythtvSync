@@ -6,6 +6,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import org.mythtv.android.provider.MythtvProvider;
 import org.mythtv.android.service.AccountService;
@@ -27,6 +28,7 @@ public class SyncUtils {
      * @param context Context
      */
     public static void CreateSyncAccount( Context context ) {
+        Log.i( TAG, "CreateSyncAccount : enter" );
 
         boolean newAccount = false;
         boolean setupComplete = PreferenceManager.getDefaultSharedPreferences( context ).getBoolean( PREF_SETUP_COMPLETE, false );
@@ -50,13 +52,17 @@ public class SyncUtils {
         }
 
         if( newAccount || !setupComplete ) {
+            Log.i( TAG, "CreateSyncAccount : triggering refresh" );
+
             TriggerRefresh();
-            PreferenceManager.getDefaultSharedPreferences( context ).edit().putBoolean(PREF_SETUP_COMPLETE, true).commit();
+            PreferenceManager.getDefaultSharedPreferences( context ).edit().putBoolean( PREF_SETUP_COMPLETE, true ).commit();
         }
 
+        Log.i( TAG, "CreateSyncAccount : exit" );
     }
 
     public static void TriggerRefresh() {
+        Log.d( TAG, "TriggerRefresh : enter" );
 
         Bundle b = new Bundle();
 
@@ -67,8 +73,10 @@ public class SyncUtils {
         ContentResolver.requestSync(
             AccountService.GetAccount(),        // Sync account
             MythtvProvider.AUTHORITY,           // Content authority
-            b
-        );                                 // Extras
+            b                                   // Extras
+        );
+
+        Log.d( TAG, "TriggerRefresh : exit" );
     }
 
 }

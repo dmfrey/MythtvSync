@@ -33,7 +33,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         mContext = context;
         mContentResolver = context.getContentResolver();
 
-        mLocationProfile = mLocationProfileDaoHelper.findConnectedProfile( context );
     }
 
     /**
@@ -45,14 +44,16 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         mContext = context;
         mContentResolver = context.getContentResolver();
 
-        mLocationProfile = mLocationProfileDaoHelper.findConnectedProfile( context );
     }
 
     @Override
     public void onPerformSync( Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult ) {
         Log.i( TAG, "onPerformSync : Beginning network synchronization" );
 
-        RecordedHelperV27.getInstance().process( mContext, mLocationProfile );
+        mLocationProfile = mLocationProfileDaoHelper.findConnectedProfile( mContext );
+        if( null != mLocationProfile ) {
+            RecordedHelperV27.getInstance().process( mContext, mLocationProfile );
+        }
 
         Log.i(TAG, " onPerformSync : Network synchronization complete" );
     }
