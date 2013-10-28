@@ -42,29 +42,6 @@ public class LocationProfileDialogFragment extends DialogFragment implements Ada
     }
 
     @Override
-    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
-        Log.d( TAG, "onCreateView : enter" );
-
-        View v = inflater.inflate( R.layout.fragment_location_profile_dialog, container, false );
-
-        mLocationProfileTypeSpinner = (Spinner) v.findViewById( R.id.location_profile_type_spinner );
-
-        mName = (EditText) v.findViewById( R.id.name_editText );
-        mUrl = (EditText) v.findViewById( R.id.url_editText );
-        mHostname = (EditText) v.findViewById( R.id.hostname_editText );
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource( getActivity(), R.array.location_profile_types_array, android.R.layout.simple_spinner_item );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mLocationProfileTypeSpinner.setAdapter(adapter);
-        mLocationProfileTypeSpinner.setOnItemSelectedListener( this );
-
-        setShowsDialog( true );
-
-        Log.d( TAG, "onCreateView : exit" );
-        return v;
-    }
-
-    @Override
     public void onActivityCreated( Bundle savedInstanceState ) {
         Log.i(TAG, "onActivityCreated : enter");
         super.onActivityCreated( savedInstanceState );
@@ -79,28 +56,37 @@ public class LocationProfileDialogFragment extends DialogFragment implements Ada
     @Override
     public Dialog onCreateDialog( Bundle savedInstanceState ) {
 
-        return new AlertDialog.Builder( getActivity() )
-            .setTitle( getResources().getString( R.string.lbl_location_profile_dialog_title ) )
-            .setPositiveButton( getResources().getString( R.string.btn_save ),
+        View v = LayoutInflater.from(getActivity()).inflate( R.layout.fragment_location_profile_dialog, null);
 
-                new DialogInterface.OnClickListener() {
-                    public void onClick( DialogInterface dialog, int whichButton ) {
-                        save();
-                    }
-                }
+        mLocationProfileTypeSpinner = (Spinner) v.findViewById( R.id.location_profile_type_spinner );
 
-             )
-            .setNegativeButton( getResources().getString( R.string.btn_close ),
+        mName = (EditText) v.findViewById( R.id.name_editText );
+        mUrl = (EditText) v.findViewById( R.id.url_editText );
+        mHostname = (EditText) v.findViewById( R.id.hostname_editText );
 
-                new DialogInterface.OnClickListener() {
-                    public void onClick( DialogInterface dialog, int whichButton ) {
-                        dialog.dismiss();
-                    }
-                }
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource( getActivity(), R.array.location_profile_types_array, android.R.layout.simple_spinner_item );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mLocationProfileTypeSpinner.setAdapter(adapter);
+        mLocationProfileTypeSpinner.setOnItemSelectedListener( this );
 
-            )
-            .show();
-
+        return new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.lbl_location_profile_dialog_title)
+                .setView(v)
+                .setPositiveButton(R.string.btn_save,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                save();
+                            }
+                        }
+                )
+                .setNegativeButton(R.string.btn_close,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.dismiss();
+                            }
+                        }
+                )
+                .create();
     }
 
     public void onItemSelected( AdapterView<?> parent, View view, int pos, long id ) {
